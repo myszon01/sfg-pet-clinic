@@ -2,6 +2,8 @@ package myszon.springframework.sfgpetclinic.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "pets")
@@ -21,6 +23,10 @@ public class Pet extends BaseEntity {
 
     @Column(name = "name")
     private String name;
+
+    @Column(name = "visit")
+    @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL)
+    private Set<Visit> visit = new HashSet<>();
 
     public String getName() {
         return name;
@@ -52,5 +58,13 @@ public class Pet extends BaseEntity {
 
     public void setBirthdayDate(LocalDate birthdayDate) {
         this.birthdayDate = birthdayDate;
+    }
+
+    public Set<Visit> getVisit() {
+        return visit;
+    }
+
+    public void setVisit(Set<Visit> visit) {
+        this.visit = visit;
     }
 }
