@@ -14,7 +14,7 @@ public class Visit extends BaseEntity {
     private String description;
 
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "pet_id")
     private Pet pet;
 
