@@ -6,11 +6,13 @@ import myszon.springframework.sfgpetclinic.model.PetType;
 import myszon.springframework.sfgpetclinic.services.OwnerService;
 import myszon.springframework.sfgpetclinic.services.PetService;
 import myszon.springframework.sfgpetclinic.services.PetTypeService;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
 @Service
+@Profile({"default", "map"})
 public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements OwnerService {
 
     private final PetTypeService petTypeService;
@@ -39,21 +41,22 @@ public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements 
 
     @Override
     public Owner save(Owner object) {
-        Owner savedOwner = null;
 
         if (object != null) {
 
-            if (object.getPets().size() > 0) {
+            if (object.getPets() != null) {
                 object.getPets().forEach(pet -> {
                     if (pet.getPetType() != null) {
 
-                        pet.setPetType(petTypeService.save(pet.getPetType()));
+                        if(pet.getPetType().getId() == null){
+                            pet.setPetType(petTypeService.save(pet.getPetType()));
+                        }
 
                     } else {
                         throw new RuntimeException("Pet type is required");
                     }
 
-                    if(pet.getId() != null){
+                    if(pet.getId() == null){
                         Pet savedPet = petService.save(pet);
                         pet.setId(savedPet.getId());
                     }
