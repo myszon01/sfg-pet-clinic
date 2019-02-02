@@ -1,10 +1,17 @@
 package myszon.springframework.sfgpetclinic.model;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "pets")
 public class Pet extends BaseEntity {
@@ -28,43 +35,5 @@ public class Pet extends BaseEntity {
     @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL)
     private Set<Visit> visit = new HashSet<>();
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public PetType getPetType() {
-        return petType;
-    }
-
-    public void setPetType(PetType petType) {
-        this.petType = petType;
-    }
-
-    public Owner getOwner() {
-        return owner;
-    }
-
-    public void setOwner(Owner owner) {
-        this.owner = owner;
-    }
-
-    public LocalDate getBirthdayDate() {
-        return birthdayDate;
-    }
-
-    public void setBirthdayDate(LocalDate birthdayDate) {
-        this.birthdayDate = birthdayDate;
-    }
-
-    public Set<Visit> getVisit() {
-        return visit;
-    }
-
-    public void setVisit(Set<Visit> visit) {
-        this.visit = visit;
-    }
 }
