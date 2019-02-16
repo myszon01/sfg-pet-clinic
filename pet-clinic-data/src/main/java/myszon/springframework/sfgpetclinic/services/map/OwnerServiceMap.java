@@ -2,7 +2,6 @@ package myszon.springframework.sfgpetclinic.services.map;
 
 import myszon.springframework.sfgpetclinic.model.Owner;
 import myszon.springframework.sfgpetclinic.model.Pet;
-import myszon.springframework.sfgpetclinic.model.PetType;
 import myszon.springframework.sfgpetclinic.services.OwnerService;
 import myszon.springframework.sfgpetclinic.services.PetService;
 import myszon.springframework.sfgpetclinic.services.PetTypeService;
@@ -78,6 +77,10 @@ public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements 
 
     @Override
     public Owner findByLastName(String lastName) {
-        return null;
+        return this.findAll()
+                .stream()
+                .filter(owner -> owner.getLastName().equalsIgnoreCase(lastName))
+                .findFirst()
+                .orElse(null);
     }
 }
